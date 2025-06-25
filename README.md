@@ -63,10 +63,10 @@ bun run server
 
 #### Open your browser
 
-Navigate to: `http://localhost:3000`
+Navigate to: `http://localhost:3001`
 
 For mobile devices, use your computer's IP:
-`http://[YOUR_IP]:3000`
+`http://[YOUR_IP]:3001`
 
 ---
 
