@@ -1,6 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BeatSync 🎵
 
-## Getting Started
+A real-time synchronized audio playback application that allows multiple devices to play audio in perfect harmony across a network. Built with Next.js, TypeScript, and WebSockets.
+
+## ✨ Features
+
+- **Real-time Audio Synchronization**: Play audio across multiple devices with millisecond precision
+- **Clock Synchronization**: Advanced ping-pong mechanism to sync device clocks
+- **Spatial Audio Visualization**: Interactive grid showing device positions
+- **File Upload Support**: Upload and share audio files instantly
+- **WebSocket Communication**: Real-time messaging between devices
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ or Bun runtime
+- Modern web browser with Web Audio API support
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Lazykitty244/Zync.git
+   cd Zync
+   ```
 
 First, run the development server:
 
