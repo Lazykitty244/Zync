@@ -1,4 +1,4 @@
-# BeatSync 🎵
+# Zync 🎵
 
 A real-time synchronized audio playback application that allows multiple devices to play audio in perfect harmony across a network. Built with Next.js, TypeScript, and WebSockets.
 
