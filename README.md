@@ -1,60 +1,276 @@
-# Zync 🎵
+# 🎵 Zync
 
-A real-time synchronized audio playback application that allows multiple devices to play audio in perfect harmony across a network. Built with Next.js, TypeScript, and WebSockets.
+**Zync** is a real-time synchronized audio playback application that allows multiple devices to play audio in perfect harmony across a network. Built with **Next.js**, **TypeScript**, and **WebSockets**.
+
+---
 
 ## ✨ Features
 
-- **Real-time Audio Synchronization**: Play audio across multiple devices with millisecond precision
-- **Clock Synchronization**: Advanced ping-pong mechanism to sync device clocks
-- **Spatial Audio Visualization**: Interactive grid showing device positions
-- **File Upload Support**: Upload and share audio files instantly
-- **WebSocket Communication**: Real-time messaging between devices
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Real-time Audio Synchronization**: Play audio across multiple devices with millisecond precision  
+- **Clock Synchronization**: Advanced ping-pong mechanism to sync device clocks  
+- **Spatial Audio Visualization**: Interactive grid showing device positions  
+- **File Upload Support**: Upload and share audio files instantly  
+- **WebSocket Communication**: Real-time messaging between devices  
+- **Responsive Design**: Works seamlessly on desktop and mobile devices  
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ or Bun runtime
-- Modern web browser with Web Audio API support
+- Node.js 18+ or [Bun](https://bun.sh/) runtime  
+- Modern web browser with Web Audio API support  
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Lazykitty244/Zync.git
-   cd Zync
-   ```
-
-First, run the development server:
+#### Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Lazykitty244/Zync.git
+cd Zync
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Using npm
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Or using bun
+bun install
+```
 
-## Learn More
+#### Start the development server
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Using npm
+npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Or using bun
+bun run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### Start the WebSocket server
 
-## Deploy on Vercel
+```bash
+# Using npm
+npm run server
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Or using bun
+bun run server
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Open your browser
+
+Navigate to: `http://localhost:3000`
+
+For mobile devices, use your computer's IP:
+`http://[YOUR_IP]:3000`
+
+---
+
+## 📱 Multi-Device Setup
+
+### 1. Find your computer's IP address
+
+```bash
+# Windows
+ipconfig
+
+# macOS/Linux
+ifconfig
+```
+
+### 2. Connect devices to the same network
+
+Ensure all devices are on the same WiFi network.
+
+### 3. Open the app on each device using your computer's IP
+
+Devices will automatically sync when they join.
+
+### 4. Upload audio files and enjoy synchronized playback!
+
+---
+
+## 🏗️ Architecture
+
+### Frontend (Next.js + TypeScript)
+
+- **Components**: Modular React components for audio controls, file upload, and spatial visualization
+- **Hooks**: Custom hooks for audio engine, clock synchronization, and WebSocket management
+- **Types**: TypeScript definitions for type-safe development
+
+### Backend (Bun + WebSockets)
+
+- **Real-time Communication**: WebSocket server for instant messaging
+- **File Handling**: Audio file upload and serving
+- **Session Management**: Multi-device session coordination
+
+---
+
+## 🧠 Key Technologies
+
+- **Web Audio API**: Precise audio playback and scheduling
+- **WebSockets**: Real-time bidirectional communication
+- **Clock Synchronization**: Custom ping-pong algorithm for time sync
+- **Tailwind CSS**: Modern, responsive styling
+
+---
+
+## 📁 Project Structure
+
+```
+beatsync/
+├── src/
+│   ├── app/                  # Next.js app directory
+│   │   ├── page.tsx          # Main application page
+│   │   ├── layout.tsx        # App layout
+│   │   └── globals.css       # Global styles
+│   ├── components/           # React components
+│   │   ├── AudioControls.tsx     # Audio playback controls
+│   │   ├── FileUpload.tsx        # File upload interface
+│   │   └── SpatialGrid.tsx       # Device position visualization
+│   ├── hooks/                # Custom React hooks
+│   │   ├── useAudioEngine.ts     # Audio playback management
+│   │   └── useClockSync.ts       # Clock synchronization
+│   └── types/                # TypeScript type definitions
+│       └── sync.ts           # Synchronization types
+├── server/
+│   └── index.ts              # WebSocket server
+├── uploads/                  # Audio file storage
+└── public/                   # Static assets
+```
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_WS_URL=ws://localhost:8080
+NEXT_PUBLIC_API_URL=http://localhost:8080
+```
+
+### Server Configuration
+
+The WebSocket server runs on port 8080 by default. To change this, modify:
+
+```typescript
+// server/index.ts
+const server = Bun.serve({
+  port: 8080,
+  // ... other config
+});
+```
+
+---
+
+## 🎯 Synchronization Accuracy
+
+- **Local Network**: ~5–20ms
+- **Good Internet**: ~20–50ms
+- **Variable Networks**: ~50–200ms
+
+The app uses:
+
+- Clock offset calculation with ping-pong messaging
+- Precise audio scheduling via Web Audio API
+- Coordinated playback commands via WebSocket broadcasting
+
+---
+
+## 🛠️ Development
+
+### Available Scripts
+
+```bash
+# Development
+npm run dev         # Start Next.js dev server
+npm run server      # Start WebSocket server
+
+# Building
+npm run build       # Build for production
+npm run start       # Start production server
+
+# Linting
+npm run lint        # Run ESLint
+```
+
+### Adding New Features
+
+- **Audio Effects**: Extend `useAudioEngine` hook
+- **New Sync Messages**: Add to `src/types/sync.ts`
+- **UI Components**: Add to `src/components/`
+- **Server Features**: Modify `server/index.ts`
+
+---
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Other Platforms
+
+- **Railway**: Full-stack deployment with WebSocket support
+- **Render**: Node.js backend with static frontend
+- **Heroku**: Traditional platform-as-a-service
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+
+2. Create a feature branch:
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+
+3. Commit your changes:
+   ```bash
+   git commit -m 'Add amazing feature'
+   ```
+
+4. Push to GitHub:
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the LICENSE file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
+- [Bun runtime](https://bun.sh/)
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+
+---
+
+## 📞 Support
+
+- Check the [Issues](https://github.com/Lazykitty244/Zync/issues) page
+- Open a new issue with detailed information
+- Join community discussions
+
+---
+
+Made with ❤️ for synchronized audio experiences
