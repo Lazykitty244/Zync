@@ -61,11 +61,11 @@ npm run server
 bun run server
 ```
 
-### Open your browser
+### 🚀 Open in Browser
 
-Navigate to: http://localhost:3000
-
-For mobile devices, use your computer's IP: http://[YOUR_IP]:3000
+- On your computer: [http://localhost:3000](http://localhost:3000)
+- On your phone: `http://<YOUR_COMPUTER_IP>:3000`  
+  *(Replace `<YOUR_COMPUTER_IP>` with your actual local IP address)*
 ---
 
 ## 📱 Multi-Device Setup
