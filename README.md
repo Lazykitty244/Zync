@@ -61,7 +61,7 @@ npm run server
 bun run server
 ```
 
-###Open your browser
+### Open your browser
 
 Navigate to: http://localhost:3000
 
