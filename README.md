@@ -63,10 +63,17 @@ bun run server
 
 #### Open your browser
 
+<<<<<<< HEAD
 Navigate to: `http://localhost:3000`
 
 For mobile devices, use your computer's IP:
 `http://[YOUR_IP]:3000`
+=======
+Navigate to: `http://localhost:3001`
+
+For mobile devices, use your computer's IP:
+`http://[YOUR_IP]:3001`
+>>>>>>> 6c4545b879bbd54f72a5bdc781bf8b8111c95d6e
 
 ---
 
@@ -152,8 +159,13 @@ beatsync/
 Create a `.env.local` file:
 
 ```env
+<<<<<<< HEAD
 NEXT_PUBLIC_WS_URL=ws://localhost:8080
 NEXT_PUBLIC_API_URL=http://localhost:8080
+=======
+NEXT_PUBLIC_WS_URL=ws://localhost:8081
+NEXT_PUBLIC_API_URL=http://localhost:8081
+>>>>>>> 6c4545b879bbd54f72a5bdc781bf8b8111c95d6e
 ```
 
 ### Server Configuration
@@ -250,9 +262,13 @@ vercel
 
 ---
 
+<<<<<<< HEAD
 ## 📄 License
 
 This project is licensed under the MIT License — see the LICENSE file for details.
+=======
+
+>>>>>>> 6c4545b879bbd54f72a5bdc781bf8b8111c95d6e
 
 ---
 
@@ -273,4 +289,8 @@ This project is licensed under the MIT License — see the LICENSE file for deta
 
 ---
 
+<<<<<<< HEAD
 Made with ❤️ for synchronized audio experiences
+=======
+Made with ❤️ for synchronized audio experiences
+>>>>>>> 6c4545b879bbd54f72a5bdc781bf8b8111c95d6e
