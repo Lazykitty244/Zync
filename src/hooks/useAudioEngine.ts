@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { AudioState } from '@/types/sync';
 
 export function useAudioEngine() {
@@ -74,6 +74,13 @@ export function useAudioEngine() {
     };
   }, []);
 
+  const play = useCallback(() => {
+    if (!audioState.isPlaying && audioBufferRef.current) {
+      const offset = pauseTimeRef.current ? (pauseTimeRef.current - startTimeRef.current) / 1000 : 0;
+      schedulePlay(performance.now(), offset);
+    }
+  }, [audioState.isPlaying, schedulePlay]);
+
   const pause = useCallback(() => {
     if (sourceNodeRef.current && audioState.isPlaying) {
       sourceNodeRef.current.stop();
@@ -81,6 +88,20 @@ export function useAudioEngine() {
       setAudioState(prev => ({ ...prev, isPlaying: false }));
     }
   }, [audioState.isPlaying]);
+
+  const seek = useCallback((time: number) => {
+    const wasPlaying = audioState.isPlaying;
+    if (wasPlaying) {
+      pause();
+    }
+    
+    pauseTimeRef.current = startTimeRef.current + (time * 1000);
+    setAudioState(prev => ({ ...prev, currentTime: time }));
+    
+    if (wasPlaying) {
+      schedulePlay(performance.now(), time);
+    }
+  }, [audioState.isPlaying, pause, schedulePlay]);
 
   const setVolume = useCallback((volume: number) => {
     if (gainNodeRef.current) {
@@ -107,9 +128,13 @@ export function useAudioEngine() {
 
   return {
     audioState,
+    audioContext: audioContextRef.current,
+    gainNode: gainNodeRef.current,
     loadAudio,
-    schedulePlay,
+    play,
     pause,
+    seek,
+    schedulePlay,
     setVolume,
     getCurrentTime,
     initAudioContext

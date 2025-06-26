@@ -22,6 +22,8 @@ interface SyncMessage {
   type: string;
   timestamp: number;
   sessionId?: string;
+  deviceId?: string;  // Added for type compatibility
+  sessionName?: string;  // Added for create_session messages
   data?: any;
 }
 
@@ -31,13 +33,63 @@ interface Client {
   sessionId: string;
 }
 
+interface SessionInfo {
+  sessionId: string;
+  name: string;
+  createdAt: Date;
+  deviceCount: number;
+  isActive: boolean;
+}
+
+interface CreateSessionMessage {
+  type: 'create_session';
+  sessionName?: string;
+  deviceId: string;
+}
+
 const clients = new Map<string, Client>();
+// Fixed: sessions should store deviceId strings, not WebSocket objects
 const sessions = new Map<string, Set<string>>();
+const sessionInfo = new Map<string, SessionInfo>();
+
+function generateSessionId(): string {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+function handleCreateSession(ws: ServerWebSocket<unknown>, message: CreateSessionMessage) {
+  const sessionId = generateSessionId();
+  const session = new Set([message.deviceId]);
+  sessions.set(sessionId, session);
+  
+  sessionInfo.set(sessionId, {
+    sessionId,
+    name: message.sessionName || `Session ${sessionId}`,
+    createdAt: new Date(),
+    deviceCount: 1,
+    isActive: true
+  });
+  
+  ws.send(JSON.stringify({
+    type: 'session_created',
+    sessionId,
+    sessionInfo: sessionInfo.get(sessionId)
+  }));
+}
 
 const server = serve({
-  port: 8081, // Changed from 8080 to 8081
+  port: 8081,
   fetch(req, server) {
     const url = new URL(req.url);
+    
+    // Session validation endpoint
+    if (url.pathname.startsWith('/session/') && url.pathname.endsWith('/validate')) {
+      const sessionId = url.pathname.split('/')[2];
+      return new Response(JSON.stringify({ 
+        exists: sessionInfo.has(sessionId) 
+      }), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
     
     if (url.pathname === '/upload' && req.method === 'POST') {
       return handleFileUpload(req);
@@ -62,7 +114,7 @@ const server = serve({
       console.log('Client connected');
     },
     close(ws) {
-      // Remove client from sessions
+      // Fixed: Remove client from sessions properly
       for (const [clientId, client] of clients.entries()) {
         if (client.ws === ws) {
           const session = sessions.get(client.sessionId);
@@ -79,6 +131,15 @@ function handleWebSocketMessage(ws: ServerWebSocket<unknown>, message: SyncMessa
   const now = performance.now();
   
   switch (message.type) {
+    case 'create_session':
+      // Type-safe conversion now works due to updated SyncMessage interface
+      if (message.deviceId) {
+        handleCreateSession(ws, message as CreateSessionMessage);
+      } else {
+        console.error('Invalid create_session message: missing deviceId');
+      }
+      break;
+      
     case 'ping':
       ws.send(JSON.stringify({
         type: 'pong',
@@ -92,8 +153,14 @@ function handleWebSocketMessage(ws: ServerWebSocket<unknown>, message: SyncMessa
       break;
       
     case 'join':
-      const deviceId = message.data.deviceId;
+      // Fixed: Add null check for message.data
+      const deviceId = message.data?.deviceId;
       const sessionId = message.sessionId || 'default';
+      
+      if (!deviceId) {
+        console.error('No deviceId provided in join message');
+        return;
+      }
       
       clients.set(deviceId, { ws, deviceId, sessionId });
       
@@ -150,4 +217,4 @@ function handleAudioServe(filename: string | null) {
   return new Response(file);
 }
 
-console.log('BeatSync server running on http://localhost:8081');
+console.log('BeatSync server running on port 8081');

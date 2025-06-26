@@ -23,4 +23,27 @@ export interface DevicePosition {
   y: number;
   volume: number;
   deviceId: string;
+  nickname?: string;
+}
+
+// Add to existing types
+export interface SessionInfo {
+  sessionId: string;
+  name: string;
+  createdAt: Date;
+  deviceCount: number;
+  isActive: boolean;
+}
+
+export interface JoinSessionMessage {
+  type: 'join_session';
+  sessionId: string;
+  deviceId: string;
+  nickname?: string;
+}
+
+export interface CreateSessionMessage {
+  type: 'create_session';
+  sessionName?: string;
+  deviceId: string;
 }

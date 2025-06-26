@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"bun run server\"",
     "build": "next build",
     "start": "next start",
+    "start:prod": "concurrently \"next start\" \"bun run server\"",
+    "server": "bun run server/index.ts",
     "lint": "next lint",
-    "server": "C:\\Users\\asrit\\.bun\\bin\\bun.exe server/index.ts",
-    "dev:all": "concurrently \"npm run dev\" \"npm run server\""
+    "type-check": "tsc --noEmit",
+    "docker:build": "docker build -t zync .",
+    "docker:run": "docker run -p 3000:3000 -p 8081:8081 zync"
   },
   "dependencies": {
     "@types/node": "^20",
@@ -23,10 +26,10 @@
     "tailwindcss": "^4.1.10",
     "tsx": "^4.20.3",
     "typescript": "^5",
-    "ws": "^8.18.2"
+    "ws": "^8.18.2",
+    "concurrently": "^8.2.2"
   },
   "devDependencies": {
-    "@types/bun": "^1.2.17",
-    "concurrently": "^8.2.2"
+    "@types/bun": "^1.2.17"
   }
 }
