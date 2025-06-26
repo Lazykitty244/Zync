@@ -63,7 +63,6 @@ bun run server
 
 #### Open your browser
 
-<<<<<<< HEAD
 Navigate to: `http://localhost:3000`
 
 For mobile devices, use your computer's IP:
@@ -73,8 +72,6 @@ Navigate to: `http://localhost:3001`
 
 For mobile devices, use your computer's IP:
 `http://[YOUR_IP]:3001`
->>>>>>> 6c4545b879bbd54f72a5bdc781bf8b8111c95d6e
-
 ---
 
 ## 📱 Multi-Device Setup
